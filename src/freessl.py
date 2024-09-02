@@ -1,6 +1,7 @@
 from common_utils import *
 #import nginx
 import argparse
+import os
 
 NGINX_CONF = "/etc/nginx/ngnix.conf"
 DOMAIN = ""
@@ -10,13 +11,13 @@ def installAcme():
     # git clone https://gitee.com/neilpang/acme.sh.git
     # cd acme.sh
     # ./acme.sh --install -m my@example.com
-
-    cmd =  f"git clone https://gitee.com/neilpang/acme.sh.git"
-    ret, out = Cmd(cmd).execute_cmd()
-
-    if not ret:
-        print(f"git clone acme.sh error, {out}")
-        return False
+    if not os.path.exist("acme.sh"):
+        cmd =  f"git clone https://gitee.com/neilpang/acme.sh.git"
+        ret, out = Cmd(cmd).execute_cmd()
+    
+        if not ret:
+            print(f"git clone acme.sh error, {out}")
+            return False
     
     ret, out = Cmd("cd acme.sh").execute_cmd()
     if not ret:
