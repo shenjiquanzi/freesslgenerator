@@ -19,7 +19,7 @@ def installAcme():
             print(f"git clone acme.sh error, {out}")
             return False
     
-    ret, out = Cmd("cd acme.sh").execute_cmd()
+    ret, out = Cmd("cd acme.sh; chmod +x acme.sh").execute_cmd()
     if not ret:
         print(f"cd acme.sh error, {out}")
         return False
