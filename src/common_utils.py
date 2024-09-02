@@ -46,7 +46,7 @@ class Cmd:
     def execute_cmd(self):
         # if self.isPrint:
         #     ColorPrint("CMD: %s" % self.cmd)
-        code, output = subprocess.getstatusoutput(self.cmd)
+        code, output = subprocess.run(self.cmd)
         if code != 0:
             logger.error("Excute:%s code= %s  \n output= %s" % (self.cmd, code, output))
             return False, output
