@@ -29,7 +29,8 @@ server {
 I finish this function base on Mac OS or linux ， and windows may not satisfy。
 
 # you can use as you want 
-run the freessl.py  with root priority!
+
+<font color=red> run : python3.10  freessl.py  email  domain </font>,  with root priority!
 
 run : 
 ```
@@ -66,7 +67,9 @@ ubuntu@ip-172-31-25-59:~/freesslgenerator$ crontab  -l
 23 19 * * * "/home/ubuntu/.acme.sh"/acme.sh --cron --home "/home/ubuntu/.acme.sh" > /dev/null
 ```
 
+# buymeacoffee if this help U 
 
+[☕️ click here for : buy me a coffee](https://buymeacoffee.com/tbag.yan)
 
 
 
