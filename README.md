@@ -31,5 +31,43 @@ I finish this function base on Mac OS or linux ， and windows may not satisfy�
 # you can use as you want 
 run the freessl.py  with root priority!
 
+run : 
+```
+sudo  nginx  -t 
+nginx: [warn] the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in /etc/nginx/nginx.conf:75
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+and config the path in  /etc/nginx/nginx.conf 
+
+```
+        server  {
+
+             listen  443 ;   # 配置监听的端口
+
+             ssl    on; # 开启 Ncerts/mymycert.pem;
+             ssl_certificate       /etc/nginx/ssl/www.techgopro.com/fullchain.cer 
+
+             ssl_certificate_key  /etc/nginx/ssl/www.techgopro.com/www.techgopro.com.key 
+
+
+             location / {
+                root   /home/ubuntu/techgopro/static/; # 网站根目录
+                index  index.html index.htm; # 默认首页文件
+             }
+
+        }
+```
+
+# contab will run automatically
+```
+ubuntu@ip-172-31-25-59:~/freesslgenerator$ crontab  -l 
+23 19 * * * "/home/ubuntu/.acme.sh"/acme.sh --cron --home "/home/ubuntu/.acme.sh" > /dev/null
+```
+
+
+
+
 
 
