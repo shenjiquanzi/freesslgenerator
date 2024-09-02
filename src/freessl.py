@@ -1,16 +1,12 @@
 from common_utils import *
 #import nginx
 import argparse
-import os
 
 NGINX_CONF = "/etc/nginx/ngnix.conf"
 DOMAIN = ""
 EMAIL = ""
 
 def installAcme():
-    # git clone https://gitee.com/neilpang/acme.sh.git
-    # cd acme.sh
-    # ./acme.sh --install -m my@example.com
     if not os.path.exists("acme.sh"):
         cmd =  f"git clone https://gitee.com/neilpang/acme.sh.git"
         ret, out = Cmd(cmd).execute_cmd()
@@ -18,12 +14,11 @@ def installAcme():
         if not ret:
             print(f"git clone acme.sh error, {out}")
             return False
+    else:
+        print("the acme.sh exist")
     
-    ret, out = Cmd("cd acme.sh; chmod +x acme.sh").execute_cmd()
-    if not ret:
-        print(f"cd acme.sh error, {out}")
-        return False
-    
+    os.chdir("./acme.sh")
+
     ret, out = Cmd(f"./acme.sh --install -m {EMAIL}").execute_cmd()
     if not ret:
         print(f"acme.sh install error, {out}")
@@ -32,22 +27,24 @@ def installAcme():
     return True
 
 def getSslFromAmce():
-    cmd = f"acme.sh --issue  -d {DOMAIN}   --nginx"
+    cmd = f"./acme.sh --issue --debug -d {DOMAIN}   --nginx"
     ret, out = Cmd(cmd).execute_cmd()
     if not ret:
         print(f"get ssl certs from acme.sh error, {out}")
         return False
-    
     return True
 
 def copySslToNgix():
+    print("start mkdir for ssl")
     cmd = f"mkdir -p /etc/nginx/ssl/{DOMAIN}"
     ret, out = Cmd(cmd).execute_cmd()
     if not ret:
         print(f"get ssl certs from acme.sh error, {out}")
         return False
     
-    cmd = f"acme.sh --install-cert -d {DOMAIN} --key-file /etc/nginx/ssl/{DOMAIN}/{DOMAIN}.key --fullchain-file  /etc/nginx/ssl/{DOMAIN}/fullchain.cer --reloadcmd 'service nginx force-reload'"
+    print("finish mkdir for ssl")
+    
+    cmd = f"./acme.sh --debug --install-cert -d {DOMAIN} --key-file /etc/nginx/ssl/{DOMAIN}/{DOMAIN}.key --fullchain-file  /etc/nginx/ssl/{DOMAIN}/fullchain.cer --reloadcmd 'service nginx force-reload'"
     ret, out = Cmd(cmd).execute_cmd()
     
     if not ret:
@@ -85,18 +82,24 @@ if __name__ == '__main__':
 
     EMAIL = args.email
     DOMAIN = args.domain
-
+    print("start to install acme.sh")
     ret = installAcme()
     if not ret:
         exit(-1)
+    print("finish to install acme.sh")
 
+    print("start to getssl from amce")
     ret = getSslFromAmce()
     if not ret:
         exit(-1)
+    
+    print("finish to getssl from amce")
 
+    print("start to copy sslToNginx from amce")
     ret = copySslToNgix()
     if not ret:
         exit(-1)
+    print("finish to copy sslToNginx from amce")
 
     # ret = updateNginxConf()
     # if not ret:
