@@ -78,8 +78,8 @@ def copySslToNgix():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("email", help="email is needed!", required= True)
-    parser.add_argument("domain", help="domain is needed!", required=True)
+    parser.add_argument("email", help="email is needed!")
+    parser.add_argument("domain", help="domain is needed!")
     args = parser.parse_args()
 
     EMAIL = args.email
