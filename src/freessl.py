@@ -11,16 +11,21 @@ def installAcme():
     # cd acme.sh
     # ./acme.sh --install -m my@example.com
 
-    cmd =  f"curl  https://get.acme.sh | sh -s email={EMAIL}"
+    cmd =  f"git clone https://gitee.com/neilpang/acme.sh.git"
     ret, out = Cmd(cmd).execute_cmd()
 
     if not ret:
-        print(f"install acme.sh error, {out}")
+        print(f"git clone acme.sh error, {out}")
         return False
     
-    ret, out = Cmd("source ~/.bashrc").execute_cmd()
+    ret, out = Cmd("cd acme.sh").execute_cmd()
     if not ret:
-        print(f"source  acme.sh error, {out}")
+        print(f"cd acme.sh error, {out}")
+        return False
+    
+    ret, out = Cmd(f"./acme.sh --install -m {EMAIL}").execute_cmd()
+    if not ret:
+        print(f"acme.sh install error, {out}")
         return False
     
     return True
@@ -74,8 +79,8 @@ def copySslToNgix():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("-email", "--email", required= True)
-    group.add_argument("-domain","--domain", required=True)
+    group.add_argument("email", "--email", required= True, action="store_true")
+    group.add_argument("domain","--domain", required=True, action="store_true")
     args = parser.parse_args()
 
     EMAIL = args.email
