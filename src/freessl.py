@@ -11,7 +11,7 @@ def installAcme():
     # git clone https://gitee.com/neilpang/acme.sh.git
     # cd acme.sh
     # ./acme.sh --install -m my@example.com
-    if not os.path.exist("acme.sh"):
+    if not os.path.exists("acme.sh"):
         cmd =  f"git clone https://gitee.com/neilpang/acme.sh.git"
         ret, out = Cmd(cmd).execute_cmd()
     
