@@ -29,6 +29,7 @@ server {
 I finish this function base on Mac OS or linux ， and windows may not satisfy。
 
 # you can use as you want 
+run the freessl.py  with root priority!
 
 
 
