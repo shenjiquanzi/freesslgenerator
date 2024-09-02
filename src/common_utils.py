@@ -27,7 +27,7 @@ def InitLogger(logFile, logLevel):
     return logger
 
 logger = InitLogger(
-    f"%s/xhs-%s_%s_%s.log"
+    f"%s/freessl-%s_%s_%s.log"
     % (
         __strModuleDir__,
         datetime.datetime.now().year,
