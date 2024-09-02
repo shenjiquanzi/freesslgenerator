@@ -1,5 +1,7 @@
 # freesslgenerator
 
+you can get ssl certification with this tools for  free, and it will be automatically when the SSL certification out of date.
+
 # requirements.txt
 you need install nginx_python 0.1.2 with pip3 first
 
