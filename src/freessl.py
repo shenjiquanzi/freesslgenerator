@@ -1,5 +1,5 @@
 from common_utils import *
-import nginx
+#import nginx
 import argparse
 
 NGINX_CONF = "/etc/nginx/ngnix.conf"
@@ -50,26 +50,26 @@ def copySslToNgix():
     
     return True
 
-def updateNginxConf():
-    conf = nginx.load(NGINX_CONF)
-    if not conf:
-       print(f"the nginx conf not exit, {NGINX_CONF}") 
-       return
+# def updateNginxConf():
+#     conf = nginx.load(NGINX_CONF)
+#     if not conf:
+#        print(f"the nginx conf not exit, {NGINX_CONF}") 
+#        return
     
-    if len(conf.servers) == 0:
-        server = conf.add_server()
-        server.add("server_name", DOMAIN)
+#     if len(conf.servers) == 0:
+#         server = conf.add_server()
+#         server.add("server_name", DOMAIN)
     
-    for server in conf.servers:
-        server.delete("ssl_certificate_key")
-        server.add("ssl_certificate_key", f"/etc/nginx/ssl/{DOMAIN}/{DOMAIN}.key")
+#     for server in conf.servers:
+#         server.delete("ssl_certificate_key")
+#         server.add("ssl_certificate_key", f"/etc/nginx/ssl/{DOMAIN}/{DOMAIN}.key")
 
-        server.delete("ssl_certificate")
-        server.add("ssl_certificate", f"/etc/nginx/ssl/{DOMAIN}/fullchain.cer")
+#         server.delete("ssl_certificate")
+#         server.add("ssl_certificate", f"/etc/nginx/ssl/{DOMAIN}/fullchain.cer")
 
-    nginx.dump(NGINX_CONF)
+#     nginx.dump(NGINX_CONF)
 
-    return True
+#     return True
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -93,10 +93,8 @@ if __name__ == '__main__':
     if not ret:
         exit(-1)
 
-    ret = updateNginxConf()
-    if not ret:
-        exit(-1)
+    # ret = updateNginxConf()
+    # if not ret:
+    #     exit(-1)
 
     print("success set ssl update by amce!")
-
-    
